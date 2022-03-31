@@ -17,7 +17,7 @@ public class BaseXCodec extends BaseCodec<byte[], String> {
     public static final String BASE_62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String BASE_64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     public static final String BASE_66 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.!~";
-    public BaseXCodec(String alphabet) throws Exception {
+    public BaseXCodec(String alphabet) {
         encoder = new BaseXEncoder(alphabet);
         decoder = new BaseXDecoder(alphabet);
     }

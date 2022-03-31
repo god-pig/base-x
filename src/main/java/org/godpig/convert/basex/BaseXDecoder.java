@@ -10,14 +10,14 @@ import java.util.Arrays;
 public class BaseXDecoder implements Converter<String, byte[]> {
     private final String alphabet;
     private final byte[] baseMap = new byte[256];
-    public BaseXDecoder(String alphabet) throws Exception {
+    public BaseXDecoder(String alphabet) {
         this.alphabet = alphabet;
-        Arrays.fill(baseMap, (byte) 127);
+        Arrays.fill(baseMap, (byte) 0xFF);
         int len = alphabet.length();
         for (int i = 0; i < len; i++) {
             int xc = alphabet.codePointAt(i);
-            if (baseMap[xc] != 127) {
-                throw new Exception(alphabet.charAt(i) + " is ambiguous");
+            if (baseMap[xc] != -1) {
+                throw new IllegalArgumentException(alphabet.charAt(i) + " is ambiguous");
             }
             baseMap[xc] = (byte) i;
         }
@@ -55,7 +55,7 @@ public class BaseXDecoder implements Converter<String, byte[]> {
             int carry = baseMap[input.codePointAt(psz)] & 0xFF;
 
             // Invalid character
-            if (carry == 255) {
+            if (carry == 0xFF) {
                 throw new IllegalArgumentException("The character " + input.charAt(psz) + " at index $psz is invalid.");
             }
             int i = 0;
